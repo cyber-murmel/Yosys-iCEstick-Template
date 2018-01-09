@@ -40,6 +40,7 @@ the following commands:
 sudo apt-get install build-essential clang bison flex libreadline-dev \
     gawk tcl-dev libffi-dev git mercurial graphviz   \
     xdot pkg-config python python3 libftdi-dev
+sudo apt-get install iverilog gtkwave
 ```
 
 #### Installing Prerequisites on Fedora Based Systems
@@ -47,6 +48,7 @@ sudo apt-get install build-essential clang bison flex libreadline-dev \
 sudo dnf install make automake gcc gcc-c++ kernel-devel clang bison \
     flex readline-devel gawk tcl-devel libffi-devel git mercurial \
     graphviz python-xdot pkgconfig python python3 libftdi-devel
+sudo dnf install iverilog gtkwave
 ```
 
 #### Clone and Install tools

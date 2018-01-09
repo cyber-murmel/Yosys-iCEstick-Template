@@ -1,0 +1,16 @@
+[timestart] 0
+[size] 1918 1038
+[pos] -1 -1
+*-2.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] example_tb.
+[sst_width] 213
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 301
+@28
+example_tb.clk
+example_tb.counter_check[8:1]
+@29
+example_tb.led[5:1]
+[pattern_trace] 1
+[pattern_trace] 0

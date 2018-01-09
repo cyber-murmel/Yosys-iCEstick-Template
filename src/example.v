@@ -1,10 +1,14 @@
-module top(input clk_100mhz, output [0:4] led);
+module top(input clk_100mhz, output [4:0] led);
 
-reg [25:0] counter = 0;
-assign led = counter[25:21];
+parameter N = 26;
 
-always @(posedge clk_100mhz) begin
-    counter <= counter + 1;
-end
+wire [N:1] arr;
+assign led = arr[N:N-4];
+
+counter #(.N_COUNT(N))
+  PRES (
+    .clk(clk_100mhz),
+    .out(arr)
+);
 
 endmodule 

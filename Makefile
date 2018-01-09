@@ -1,38 +1,50 @@
-TOP = example
-CLK_MHZ = 100
+# Parameters
+NAME ?= example
+CLK_MHZ ?= 100
 
-SYN = yosys
-SYN_FLAGS = -q -p "synth_ice40 -blif $@"
-PNR = arachne-pnr
-PNR_FLAGS = -d 1k -p src/$(TOP).pcf
-PCK = icepack
-PCK_FLAGS = 
-PRG = iceprog
-PRG_FLAGS =
-TIM = icetime
-TIM_FLAGS = -tmd hx1k -c $(CLK_MHZ) -p src/$(TOP).pcf -r /dev/null
+# Tool and Flag Definition
+SYN ?= yosys
+SYN_FLAGS ?= -q -p "synth_ice40 -blif $@"
+PNR ?= arachne-pnr
+PNR_FLAGS ?= -d 1k
+PCK ?= icepack
+PCK_FLAGS ?= 
+PRG ?= iceprog
+PRG_FLAGS ?=
+TIM ?= icetime
+TIM_FLAGS ?= -tmd hx1k -c $(CLK_MHZ) -p src/$(NAME).pcf -r /dev/null
 
-synthesize: build build/$(TOP).bin
+# Directories and Files
+PRJ_DIR  = .
+PRJ_SRC  = $(wildcard $(PRJ_DIR)/src/*.v)
+PRJ_PCF  = $(wildcard $(PRJ_DIR)/src/*.pcf)
+OUT_DIR  = ./build
 
-build/$(TOP).blif: src/$(TOP).v
-	$(SYN) $(SYN_FLAGS) $<
+# Targets
+synthesize: lint build build/$(NAME).bin
 
-build/$(TOP).asc: build/$(TOP).blif src/$(TOP).pcf
-	$(PNR) $(PNR_FLAGS) $< -o $@
+build/$(NAME).blif: $(PRJ_SRC)
+	$(SYN) $(SYN_FLAGS) $?
 
-build/$(TOP).bin: build/$(TOP).asc
+build/$(NAME).asc: build/$(NAME).blif $(PRJ_PCF)
+	$(PNR) $(PNR_FLAGS) -p $(PRJ_PCF) $< -o $@
+
+build/$(NAME).bin: build/$(NAME).asc
 	$(PCK) $(PCK_FLAGS) $< $@
 
-build:
-	mkdir -p build
+lint: $(PRJ_SRC)
+	verilator --lint-only $^
 
-check_time: build/$(TOP).asc src/$(TOP).pcf
+build:
+	mkdir -p $(OUT_DIR)
+
+check_time: build/$(NAME).asc src/$(NAME).pcf
 	$(TIM) $(TIM_FLAGS) $<   
 	
-flash: build/$(TOP).bin
-	$(PRG) $(PRG_FLAGS) $<
+flash: synthesize
+	$(PRG) $(PRG_FLAGS) build/$(NAME).bin
 
 clean:
 	rm -rf build
 
-.PHONY: synthesize flash clean check_time
+.PHONY: synthesize lint build flash clean check_time

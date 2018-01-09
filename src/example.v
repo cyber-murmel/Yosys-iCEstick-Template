@@ -1,12 +1,10 @@
-module top(input clk_100mhz, output [4:0] led);
-
-parameter N = 26;
+module example #(parameter N = 26) (input clk_100mhz, output [5:1] led);
 
 wire [N:1] arr;
 assign led = arr[N:N-4];
 
 counter #(.N_COUNT(N))
-  PRES (
+  cntr (
     .clk(clk_100mhz),
     .out(arr)
 );

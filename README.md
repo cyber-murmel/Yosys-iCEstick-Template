@@ -15,11 +15,11 @@ which incorporates the [iCE40HX1K-TQ144](http://www.mouser.com/ds/2/225/iCE40Fam
 
 ### Arch Linux
 
-Install the `aur/yosys-git`, `aur/arachne-pnr-git` and `aur/icestorm-git` packages.
+Install the `aur/verilator`, `aur/yosys-git`, `aur/arachne-pnr-git` and `aur/icestorm-git` packages.
 
 If you have `yaourt` installed you can run:
 ```bash
-yaourt -S yosys-git arachne-pnr-git icestorm-git
+yaourt -S verilator yosys-git arachne-pnr-git icestorm-git
 ```
 
 If you don't have permissions to use `iceprog` your user may need to be added to the

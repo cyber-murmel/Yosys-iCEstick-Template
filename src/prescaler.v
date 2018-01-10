@@ -1,10 +1,10 @@
-module counter #(parameter N_COUNT = 26) (input clk, output [N_COUNT:1] out);
+module prescaler #(parameter N_COUNT = 26,  N_OUT = 5) (input clk_in, output [N_OUT:1]clk_out);
 
-reg [N_COUNT:1] counter = 0;
-assign out = counter;
+reg [N_COUNT:1] count = 0;
+assign clk_out = count[N_COUNT:(N_COUNT-(N_OUT-1))];
 
-always @(posedge clk) begin
-    counter <= counter + 1;
+always @(posedge clk_in) begin
+  count++;
 end
 
-endmodule 
+endmodule

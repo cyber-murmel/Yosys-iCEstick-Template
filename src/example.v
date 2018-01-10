@@ -1,12 +1,14 @@
-module example #(parameter N = 26) (input clk_100mhz, output [5:1] led);
+module example
+#(parameter N_COUNT = 26, N_LEDS = 5)
+(input clk_100mhz, output [N_LEDS:1] led);
 
-wire [N:1] arr;
-assign led = arr[N:N-4];
-
-counter #(.N_COUNT(N))
-  cntr (
-    .clk(clk_100mhz),
-    .out(arr)
-);
+    prescaler #(
+        .N_COUNT(N_COUNT),
+        .N_OUT(N_LEDS)
+      )
+      pres (
+        .clk_in(clk_100mhz),
+        .clk_out(led)
+    );
 
 endmodule 

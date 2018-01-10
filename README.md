@@ -63,3 +63,6 @@ sudo make -C yosys install
 sudo make -C arachne-pnr install
 sudo make -C icestorm install
 ```
+
+## Extras
+[iCE40 Viewer](https://knielsen.github.io/ice40_viewer/ice40_viewer.html)

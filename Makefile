@@ -6,7 +6,7 @@ DEVICE = hx1k
 
 # Tool and Flag Definition
 SYN ?= yosys
-SYN_FLAGS ?= -q -p "synth_ice40 -blif $@"
+SYN_FLAGS ?= -r $(NAME) -q -p "synth_ice40 -blif $@"
 PNR ?= arachne-pnr
 PNR_FLAGS ?= -d $(subst hx,,$(subst lp,,$(DEVICE))) -P tq144
 PCK ?= icepack
@@ -45,7 +45,7 @@ $(OUT_DIR)/$(NAME).bin: $(OUT_DIR)/$(NAME).asc
 	$(PCK) $(PCK_FLAGS) $^ $@
 
 $(OUT_DIR)/$(NAME).rpt: $(PRJ_PCF) $(OUT_DIR)/$(NAME).asc
-	$(TIM) $(TIM_FLAGS) -p $^ -r $@
+	$(TIM) $(TIM_FLAGS) -r $@ -p $^
 
 $(OUT_DIR)/$(NAME).tb: $(PRJ_SRC) $(TESTBEN)
 	mkdir -p $(OUT_DIR)
